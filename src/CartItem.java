@@ -18,4 +18,8 @@ public class CartItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public double getLineTotal() {
+        return product.getPrice() * quantity;
+    }
 }
