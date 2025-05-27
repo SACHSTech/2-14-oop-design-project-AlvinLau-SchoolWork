@@ -8,4 +8,20 @@ public class Customer {
         this.name = name;
         this.cart = cart;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ShoppingCart getCart() {
+        return cart;
+    }
 }
