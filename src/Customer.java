@@ -3,10 +3,10 @@ public class Customer {
     private String name;
     private ShoppingCart cart;
 
-    public Customer(String id, String name, ShoppingCart cart) {
+    public Customer(String id, String name) {
         this.id = id;
         this.name = name;
-        this.cart = cart;
+        this.cart = new ShoppingCart();
     }
 
     public String getId() {
