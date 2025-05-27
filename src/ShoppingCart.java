@@ -15,6 +15,14 @@ public class ShoppingCart {
         items.add(new CartItem(product, quantity));
     }
 
+    public void removeItem(String id) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getProduct().getId() == id) {
+                items.remove(i);
+            }
+        }
+    }
+
     public double getTotal() {
         double total = 0;
         for (CartItem item : items) {
