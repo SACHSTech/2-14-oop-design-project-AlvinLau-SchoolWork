@@ -34,4 +34,19 @@ public class ShoppingCart {
     public int getSize() {
         return items.size();
     }
+
+    public void sortByPrice() {
+        for (int i = 0; i < items.size() - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < items.size(); i++) {
+                if (items.get(j).getProduct().getPrice() < items.get(minIndex).getProduct().getPrice()) {
+                    minIndex = j;
+                }
+            }
+
+            CartItem temp = items.get(j);
+            items.set(i, items.get(minIndex));
+            items.set(minIndex, temp);
+        }
+    }
 }
