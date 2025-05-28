@@ -22,17 +22,34 @@ public class main {
             System.out.println("2. View Cart");
             System.out.println("3. Add Item to Cart");
             System.out.println("4. Remove Item from Cart");
-            System.out.println("5. Exit");
+            System.out.println("0. Exit");
             System.out.print("Choose an option: ");
             String choice = input.nextLine().trim();
 
             switch (choice) {
                 case "1":
                     for (Product p : catalog) {
-                        System.out.printf("s, s", p.getName() + p.getPrice());
+                        System.out.printf("%s - %s ($%.2f)%n", p.getId(), p.getName(), p.getPrice());
                     }
                     break;
-                case "5":
+                case "2":
+                    System.out.println("Your cart:");
+                    if (cart.getSize() == 0) {
+                        System.out.println("Your cart is empty");
+                    } else {
+                        for (CartItem item : cart.getItems()) {
+                            System.out.printf("%s x%d = $%.2f%n", item.getProduct().getName(), item.getQuantity(),
+                                    item.getLineTotal());
+                        }
+                    }
+                    break;
+                case "3":
+                    System.out.println("Enter product ID to add");
+                    String addId = input.nextLine();
+                    Product toAdd = findProductById(catalog, addId);
+
+                    break;
+                case "0":
                     exit = true;
                     System.out.println("Goodbye!");
                     break;
@@ -40,5 +57,14 @@ public class main {
                     System.out.println("Invaild Choice");
             }
         }
+    }
+
+    public static Product findProductbyId(List<Product> catalog, String id) {
+        for (Product p : catalog) {
+            if (p.getId().equalsIgnoreCase(id)) {
+                return p;
+            }
+        }
+        return null;
     }
 }

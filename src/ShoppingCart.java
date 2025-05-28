@@ -30,4 +30,8 @@ public class ShoppingCart {
         }
         return total;
     }
+
+    public int getSize() {
+        return items.size();
+    }
 }
