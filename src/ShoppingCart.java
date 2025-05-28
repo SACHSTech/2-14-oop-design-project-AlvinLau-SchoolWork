@@ -63,13 +63,13 @@ public class ShoppingCart {
         }
     }
 
-    public void sortByName() {
+    public void sortById() {
         for (int i = 0; i < items.size() - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < items.size(); j++) {
-                String name1 = items.get(j).getProduct().getName();
-                String name2 = items.get(minIndex).getProduct().getName();
-                if (name1.compareToIgnoreCase(name2) < 0) {
+                String id1 = items.get(j).getProduct().getId();
+                String id2 = items.get(minIndex).getProduct().getId();
+                if (id1.compareToIgnoreCase(id2) < 0) {
                     minIndex = j;
                 }
             }

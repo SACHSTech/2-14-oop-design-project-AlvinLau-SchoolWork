@@ -102,9 +102,7 @@ public class Main {
 
             switch (choice) {
                 case "1":
-                    for (Product p : catalog) {
-                        System.out.printf("%s - %s ($%.2f)%n", p.getId(), p.getName(), p.getPrice());
-                    }
+                    stock.displayStock();
                     break;
                 case "2":
                     System.out.println("Your cart:");
@@ -112,12 +110,12 @@ public class Main {
                         System.out.println("Your cart is empty");
                     } else {
                         System.out.println("Sort by:");
-                        System.out.println("1. Alphabetically");
+                        System.out.println("1. Id");
                         System.out.println("2. Price");
                         String sortChoice = input.nextLine().trim();
 
                         if (sortChoice.equals("1")) {
-                            cart.sortByName();
+                            cart.sortById();
                         } else if (sortChoice.equals("2")) {
                             cart.sortByPrice();
                         }
