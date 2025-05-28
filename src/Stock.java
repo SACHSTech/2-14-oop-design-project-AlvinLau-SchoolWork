@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Stock {
@@ -31,10 +34,13 @@ public class Stock {
     }
 
     public void displayStock() {
+        List<Map.Entry<Product, Integer>> entries = new ArrayList<>(stockMap.entrySet());
+        entries.sort(Comparator.comparing(e -> e.getKey().getId()));
         System.out.println("Current Stock:");
-        for (Map.Entry<Product, Integer> entry : stockMap.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : entries) {
             Product p = entry.getKey();
-            System.out.printf("%s - %s ($%.2f)%n", p.getId(), p.getName(), p.getPrice());
+            System.out.printf("%s - %s ($%.2f) | Quantity: %d%n",
+                    p.getId(), p.getName(), p.getPrice(), entry.getValue());
         }
     }
 
