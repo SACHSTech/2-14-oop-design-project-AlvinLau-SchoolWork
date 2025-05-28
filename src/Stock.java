@@ -2,39 +2,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Stock {
-    private Map<String, Integer> stockMap;
+    private Map<Product, Integer> stockMap;
 
     public Stock() {
         stockMap = new HashMap<>();
     }
 
-    public int getQuantity(String productId) {
-        return stockMap.getOrDefault(productId, 0);
+    public int getQuantity(Product product) {
+        return stockMap.getOrDefault(product, 0);
     }
 
-    public void setQuantity(String productId, int quantity) {
-        stockMap.put(productId, quantity);
+    public void setQuantity(Product product, int quantity) {
+        stockMap.put(product, quantity);
     }
 
-    public void increaseQuantity(String productId, int quantity) {
-        int current = getQuantity(productId);
-        stockMap.put(productId, current + quantity);
+    public void increaseQuantity(Product product, int quantity) {
+        int current = getQuantity(product);
+        stockMap.put(product, current + quantity);
     }
 
-    public boolean removeQuantity(String productId, int quantity) {
-        int current = getQuantity(productId);
+    public boolean removeQuantity(Product product, int quantity) {
+        int current = getQuantity(product);
         if (quantity > current) {
             return false;
         }
-        stockMap.put(productId, current - quantity);
+        stockMap.put(product, current - quantity);
         return true;
     }
 
     public void displayStock() {
         System.out.println("Current Stock:");
-        for (Map.Entry<String, Integer> entry : stockMap.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue() + " units");
+        for (Map.Entry<Product, Integer> entry : stockMap.entrySet()) {
+            Product p = entry.getKey();
+            System.out.printf("%s - %s ($%.2f)%n", p.getId(), p.getName(), p.getPrice());
         }
     }
-
 }
