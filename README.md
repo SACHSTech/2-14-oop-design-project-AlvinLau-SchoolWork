@@ -47,4 +47,4 @@ src/
    java -cp out Main
    ```
 
-> Developed by Alvin Lau for the ICS4U OOP Design Project.
+> Developed by Alvin Lau for the ICS4U 2-14 OOP Design Project.
