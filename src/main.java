@@ -88,13 +88,3 @@ public class Main {
             }
         }
     }
-
-    public static Product findProductById(List<Product> catalog, String id) {
-        for (Product p : catalog) {
-            if (p.getId().equalsIgnoreCase(id)) {
-                return p;
-            }
-        }
-        return null;
-    }
-}

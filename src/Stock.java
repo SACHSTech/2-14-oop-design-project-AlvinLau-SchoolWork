@@ -37,4 +37,13 @@ public class Stock {
             System.out.printf("%s - %s ($%.2f)%n", p.getId(), p.getName(), p.getPrice());
         }
     }
+
+    public Product findProductById(String id) {
+        for (Product p : stockMap.keySet()) {
+            if (p.getId().equalsIgnoreCase(id)) {
+                return p;
+            }
+        }
+        return null;
+    }
 }
