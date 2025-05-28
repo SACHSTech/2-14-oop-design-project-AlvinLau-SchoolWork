@@ -20,12 +20,24 @@ public class main {
             System.out.println("\n=== Shopping Menu ===");
             System.out.println("1. View Catalog");
             System.out.println("2. View Cart");
-            System.out.println("3. Exit");
+            System.out.println("3. Add Item to Cart");
+            System.out.println("4. Remove Item from Cart");
+            System.out.println("5. Exit");
             System.out.print("Choose an option: ");
             String choice = input.nextLine().trim();
 
             switch (choice) {
                 case "1":
+                    for (Product p : catalog) {
+                        System.out.printf("s, s", p.getName() + p.getPrice());
+                    }
+                    break;
+                case "5":
+                    exit = true;
+                    System.out.println("Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invaild Choice");
             }
         }
     }
