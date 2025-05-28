@@ -1,19 +1,20 @@
 import java.util.*;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
         Product p1 = new Product("0001", "Apple", 10);
-        Product p2 = new Product("0002", "Oranges", 15);
-        Product p3 = new Product("0003", "Bananas", 15);
+        Product p2 = new Product("0002", "Orange", 15);
+        Product p3 = new Product("0003", "Banana", 15);
         Product p4 = new Product("0004", "Chocolate", 20);
         Product p5 = new Product("0005", "Beer", 20);
 
-        List<Product> catalog = Arrays.asList(p1, p2, p3);
+        List<Product> catalog = Arrays.asList(p1, p2, p3, p4, p5);
 
-        Customer customer = new Customer("C001", "Alice");
+        Customer customer = new Customer("C-001", "Alvin");
         ShoppingCart cart = customer.getCart();
+
         boolean exit = false;
 
         while (!exit) {
@@ -41,14 +42,30 @@ public class main {
                             System.out.printf("%s x%d = $%.2f%n", item.getProduct().getName(), item.getQuantity(),
                                     item.getLineTotal());
                         }
+                        System.out.printf("%s $%.2f%n", "Your Total(Pre-tax):", cart.getTotal());
                     }
                     break;
                 case "3":
                     System.out.println("Enter product ID to add");
                     String addId = input.nextLine();
-                    Product toAdd = findProductById(catalog, addId);
-
+                    Product productToAdd = findProductById(catalog, addId);
+                    if (productToAdd == null) {
+                        System.out.println("Product doesn't exist");
+                        break;
+                    }
+                    System.out.println("Enter quantity:");
+                    int quantity = input.nextInt();
+                    input.nextLine();
+                    cart.addItem(productToAdd, quantity);
+                    System.out.println("Added to cart");
                     break;
+                case "4":
+                    System.out.println("Enter product ID to remove");
+                    String removeId = input.nextLine();
+                    cart.removeItem(removeId);
+                    System.out.println("Item successfully removed");
+                    break;
+
                 case "0":
                     exit = true;
                     System.out.println("Goodbye!");
@@ -59,7 +76,7 @@ public class main {
         }
     }
 
-    public static Product findProductbyId(List<Product> catalog, String id) {
+    public static Product findProductById(List<Product> catalog, String id) {
         for (Product p : catalog) {
             if (p.getId().equalsIgnoreCase(id)) {
                 return p;

@@ -17,7 +17,7 @@ public class ShoppingCart {
 
     public void removeItem(String id) {
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getProduct().getId() == id) {
+            if (items.get(i).getProduct().getId().equals(id)) {
                 items.remove(i);
             }
         }
