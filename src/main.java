@@ -12,6 +12,78 @@ public class Main {
 
         List<Product> catalog = Arrays.asList(p1, p2, p3, p4, p5);
 
+        Stock stock = new Stock();
+        stock.setQuantity(p1, 20);
+        stock.setQuantity(p2, 10);
+        stock.setQuantity(p3, 30);
+        stock.setQuantity(p4, 15);
+        stock.setQuantity(p5, 25);
+
+        System.out.print("Are you an admin? (y/n):");
+        String role = input.nextLine();
+        User currentUser;
+
+        if (role.equalsIgnoreCase("y")) {
+            System.out.print("Enter password: ");
+            String password = input.nextLine().trim();
+            if (password.equals("SACHS")) {
+                currentUser = new Admin("Admin01", "Admin1");
+                System.out.println("Welcome Admin");
+
+                boolean adminLoop = true;
+                while (adminLoop) {
+                    System.out.println("\n=== Admin Menu ===");
+                    System.out.println("1. View Stock");
+                    System.out.println("2. Add Stock");
+                    System.out.println("3. Remove Stock");
+                    System.out.println("0. Exit");
+                    System.out.print("Choose an option: ");
+
+                    String choice = input.nextLine().trim();
+                    Admin admin = (Admin) currentUser;
+
+                    switch (choice) {
+                        case "1":
+                            stock.displayStock();
+                            break;
+                        case "2":
+                            System.out.println("Enter product ID to add stock: ");
+                            String addId = input.nextLine();
+                            Product addProduct = stock.findProductById(addId);
+                            if (addProduct != null) {
+                                System.out.print("Quantity to add: ");
+                                int addQuantity = input.nextInt();
+                                admin.addProductStock(stock, addProduct, addQuantity);
+                            } else {
+                                System.out.println("Product not found");
+                            }
+                            break;
+                        case "3":
+                            System.out.println("Enter product ID to remove stock: ");
+                            String removeId = input.nextLine();
+                            Product removeProduct = stock.findProductById(removeId);
+                            if (removeProduct != null) {
+                                System.out.print("Quantity to remove: ");
+                                int removeQuantity = input.nextInt();
+                                if (!admin.removeProductStock(stock, removeProduct, removeQuantity)) {
+                                    System.out.println("Not enough stock");
+                                }
+                            } else {
+                                System.out.println("Product not found");
+                            }
+                            break;
+                        case "0":
+                            adminLoop = false;
+                            System.out.println("Logged out");
+                            break;
+                    }
+                }
+                return;
+            } else {
+                System.out.println("Incorrect password. Switching to customer mode.");
+            }
+        }
+
         Customer customer = new Customer("C-001", "Alvin");
         ShoppingCart cart = customer.getCart();
 
@@ -25,6 +97,7 @@ public class Main {
             System.out.println("4. Remove Item from Cart");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
+
             String choice = input.nextLine().trim();
 
             switch (choice) {
@@ -57,28 +130,42 @@ public class Main {
                     }
                     break;
                 case "3":
-                    System.out.println("Enter product ID to add");
+                    System.out.println("Enter product ID to add: ");
                     String addId = input.nextLine();
-                    Product productToAdd = findProductById(catalog, addId);
+                    Product productToAdd = stock.findProductById(addId);
                     if (productToAdd == null) {
                         System.out.println("Product doesn't exist");
                         break;
                     }
-                    System.out.println("Enter quantity:");
+                    System.out.println("Enter quantity: ");
                     int quantity = input.nextInt();
-                    input.nextLine();
-                    cart.addItem(productToAdd, quantity);
-                    System.out.println("Added to cart");
+                    int available = stock.getQuantity(productToAdd);
+                    if (quantity > available) {
+                        System.out.println("Only " + available + " is left in stock");
+                    } else {
+                        cart.addItem(productToAdd, quantity);
+                        stock.removeQuantity(productToAdd, quantity);
+                        System.out.println("Added to cart");
+                    }
                     break;
                 case "4":
-                    System.out.println("Enter product ID to remove");
+                    System.out.println("Enter product ID to remove: ");
                     String removeId = input.nextLine();
-                    System.out.println("Enter remove quantity");
-                    int removeQuantity = input.nextInt();
-                    cart.removeItem(removeId, removeQuantity);
-                    System.out.println("Items successfully removed");
+                    CartItem toRemove = null;
+                    for (CartItem item : cart.getItems()) {
+                        if (item.getProduct().getId().equalsIgnoreCase(removeId)) {
+                            toRemove = item;
+                            break;
+                        }
+                    }
+                    if (toRemove != null) {
+                        cart.getItems().remove(toRemove);
+                        stock.increaseQuantity(toRemove.getProduct(), toRemove.getQuantity());
+                        System.out.println("Item successfully removed");
+                    } else {
+                        System.out.println("Item not found in cart");
+                    }
                     break;
-
                 case "0":
                     exit = true;
                     System.out.println("Goodbye!");
@@ -88,3 +175,4 @@ public class Main {
             }
         }
     }
+}
