@@ -38,6 +38,17 @@ public class Main {
                     if (cart.getSize() == 0) {
                         System.out.println("Your cart is empty");
                     } else {
+                        System.out.println("Sort by:");
+                        System.out.println("1. Alphabetically");
+                        System.out.println("2. Price");
+                        String sortChoice = input.nextLine().trim();
+
+                        if (sortChoice.equals("1")) {
+                            cart.sortByName();
+                        } else if (sortChoice.equals("2")) {
+                            cart.sortByPrice();
+                        }
+
                         for (CartItem item : cart.getItems()) {
                             System.out.printf("%s x%d = $%.2f%n", item.getProduct().getName(), item.getQuantity(),
                                     item.getLineTotal());
