@@ -79,4 +79,30 @@ public class ShoppingCart {
             items.set(minIndex, temp);
         }
     }
+
+    public void checkout() {
+        if (items.isEmpty()) {
+            System.out.println("Your cart is empty.");
+            return;
+        }
+
+        System.out.println("\n=== Checkout ===");
+        for (CartItem item : items) {
+            System.out.printf("%s x%d = $%.2f%n",
+                    item.getProduct().getName(),
+                    item.getQuantity(),
+                    item.getLineTotal());
+        }
+
+        double subtotal = getTotal();
+        double tax = subtotal * 0.13;
+        double total = subtotal + tax;
+
+        System.out.printf("Subtotal: $%.2f%n", subtotal);
+        System.out.printf("Tax (13%%): $%.2f%n", tax);
+        System.out.printf("Total (with tax): $%.2f%n", total);
+        System.out.println("Thank you for your purchase!");
+
+        items.clear();
+    }
 }

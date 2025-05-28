@@ -94,6 +94,7 @@ public class Main {
             System.out.println("2. View Cart");
             System.out.println("3. Add Item to Cart");
             System.out.println("4. Remove Item from Cart");
+            System.out.println("5. Checkout");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -123,7 +124,7 @@ public class Main {
                             System.out.printf("%s x%d = $%.2f%n", item.getProduct().getName(), item.getQuantity(),
                                     item.getLineTotal());
                         }
-                        System.out.printf("%s $%.2f%n", "Your Total(Pre-tax):", cart.getTotal());
+                        System.out.printf("%s $%.2f%n", "Subtotal:", cart.getTotal());
                     }
                     break;
                 case "3":
@@ -134,11 +135,20 @@ public class Main {
                         System.out.println("Product doesn't exist");
                         break;
                     }
-                    System.out.println("Enter quantity: ");
+                    System.out.print("Enter quantity: ");
+                    while (!input.hasNextInt()) {
+                        System.out.println("Please enter a valid number:");
+                        input.next();
+                    }
                     int quantity = input.nextInt();
+                    input.nextLine();
                     int available = stock.getQuantity(productToAdd);
-                    if (quantity > available) {
-                        System.out.println("Only " + available + " is left in stock");
+                    if (available == 0) {
+                        System.out.println("Sorry, this item is out of stock.");
+                    } else if (quantity > available) {
+                        System.out.println("Only " + available + " is left in stock.");
+                    } else if (quantity <= 0) {
+                        System.out.println("Invalid quantity.");
                     } else {
                         cart.addItem(productToAdd, quantity);
                         stock.removeQuantity(productToAdd, quantity);
@@ -156,12 +166,31 @@ public class Main {
                         }
                     }
                     if (toRemove != null) {
-                        cart.getItems().remove(toRemove);
-                        stock.increaseQuantity(toRemove.getProduct(), toRemove.getQuantity());
-                        System.out.println("Item successfully removed");
+                        System.out.print("Enter quantity to remove: ");
+                        while (!input.hasNextInt()) {
+                            System.out.println("Please enter a valid number:");
+                            input.next();
+                        }
+                        int quantityToRemove = input.nextInt();
+                        input.nextLine();
+
+                        if (quantityToRemove <= 0 || quantityToRemove > toRemove.getQuantity()) {
+                            System.out.println("Invalid quantity.");
+                        } else if (quantityToRemove == toRemove.getQuantity()) {
+                            cart.getItems().remove(toRemove);
+                            stock.increaseQuantity(toRemove.getProduct(), quantityToRemove);
+                            System.out.println("Item fully removed from cart");
+                        } else {
+                            toRemove.setQuantity(toRemove.getQuantity() - quantityToRemove);
+                            stock.increaseQuantity(toRemove.getProduct(), quantityToRemove);
+                            System.out.println("Removed " + quantityToRemove + " from cart");
+                        }
                     } else {
                         System.out.println("Item not found in cart");
                     }
+                    break;
+                case "5":
+                    cart.checkout();
                     break;
                 case "0":
                     exit = true;
