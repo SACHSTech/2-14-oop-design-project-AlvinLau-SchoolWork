@@ -1,5 +1,13 @@
 import java.util.*;
 
+import models.Admin;
+import models.CartItem;
+import models.Customer;
+import models.Product;
+import models.ShoppingCart;
+import models.Stock;
+import models.User;
+
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
