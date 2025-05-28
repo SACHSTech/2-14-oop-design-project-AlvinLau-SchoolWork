@@ -10,8 +10,6 @@ public class Main {
         Product p4 = new Product("0004", "Chocolate", 20);
         Product p5 = new Product("0005", "Beer", 20);
 
-        List<Product> catalog = Arrays.asList(p1, p2, p3, p4, p5);
-
         Stock stock = new Stock();
         stock.setQuantity(p1, 20);
         stock.setQuantity(p2, 10);
@@ -77,6 +75,7 @@ public class Main {
                             System.out.println("Logged out");
                             break;
                     }
+                    input.close();
                 }
                 return;
             } else {
@@ -172,5 +171,6 @@ public class Main {
                     System.out.println("Invaild Choice");
             }
         }
+        input.close();
     }
 }
