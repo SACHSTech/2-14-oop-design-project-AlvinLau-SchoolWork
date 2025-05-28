@@ -73,8 +73,10 @@ public class Main {
                 case "4":
                     System.out.println("Enter product ID to remove");
                     String removeId = input.nextLine();
-                    cart.removeItem(removeId);
-                    System.out.println("Item successfully removed");
+                    System.out.println("Enter remove quantity");
+                    int removeQuantity = input.nextInt();
+                    cart.removeItem(removeId, removeQuantity);
+                    System.out.println("Items successfully removed");
                     break;
 
                 case "0":
