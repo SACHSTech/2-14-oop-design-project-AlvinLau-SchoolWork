@@ -1,24 +1,14 @@
-public class Customer {
-    private String id;
-    private String name;
+public class Customer extends User {
     private ShoppingCart cart;
 
     public Customer(String id, String name) {
-        this.id = id;
-        this.name = name;
+        super(id, name);
         this.cart = new ShoppingCart();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public void displayRole() {
+        System.out.println("Customer");
     }
 
     public ShoppingCart getCart() {
