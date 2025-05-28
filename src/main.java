@@ -1,3 +1,14 @@
+
+/**
+ * Online Store Application
+ * 
+ * This application simulates a simple online store with two user roles:
+ * - Admin: manages product stock
+ * - Customer: browses products, manages a shopping cart, and checks out
+ * 
+ * Demonstrates OOP principles: encapsulation, inheritance, abstraction,
+ * polymorphism, and aggregation.
+ */
 import java.util.*;
 
 import models.Admin;
@@ -8,6 +19,12 @@ import models.ShoppingCart;
 import models.Stock;
 import models.User;
 
+/**
+ * Entry point of the application.
+ * Handles user login and displays menus for Admin and Customer roles.
+ * 
+ * @param args command-line arguments (unused)
+ */
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);

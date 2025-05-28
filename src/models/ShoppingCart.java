@@ -2,17 +2,36 @@ package models;
 
 import java.util.*;
 
+/**
+ * Represents a customer's shopping cart, containing multiple CartItem entries.
+ * Provides methods to add, remove, sort items, and checkout.
+ */
 public class ShoppingCart {
     private List<CartItem> items;
 
+    /**
+     * Constructs an empty ShoppingCart with no items.
+     */
     public ShoppingCart() {
         this.items = new ArrayList<>();
     }
 
+    /**
+     * Returns the list of items currently in the cart.
+     * 
+     * @return list of CartItem objects
+     */
     public List<CartItem> getItems() {
         return items;
     }
 
+    /**
+     * Adds a specified quantity of a product to the cart. If the product
+     * already exists, increases its quantity.
+     * 
+     * @param product  the product to add
+     * @param quantity the number of units to add
+     */
     public void addItem(Product product, int quantity) {
         for (CartItem item : items) {
             if (item.getProduct().getId().equals(product.getId())) {
@@ -23,6 +42,14 @@ public class ShoppingCart {
         items.add(new CartItem(product, quantity));
     }
 
+    /**
+     * Removes a specified quantity of a product from the cart by product ID.
+     * If the removal quantity is greater than or equal to the current quantity,
+     * the item is removed entirely.
+     * 
+     * @param id       the product ID to remove
+     * @param quantity the number of units to remove
+     */
     public void removeItem(String id, int quantity) {
         for (int i = 0; i < items.size(); i++) {
             CartItem item = items.get(i);
@@ -38,6 +65,11 @@ public class ShoppingCart {
         }
     }
 
+    /**
+     * Calculates the total cost of all items in the cart.
+     * 
+     * @return the sum of line totals for each CartItem
+     */
     public double getTotal() {
         double total = 0;
         for (CartItem item : items) {
@@ -46,10 +78,19 @@ public class ShoppingCart {
         return total;
     }
 
+    /**
+     * Returns the number of distinct CartItem entries in the cart.
+     * 
+     * @return count of items
+     */
     public int getSize() {
         return items.size();
     }
 
+    /**
+     * Sorts the cart items in ascending order by product price using selection
+     * sort.
+     */
     public void sortByPrice() {
         for (int i = 0; i < items.size() - 1; i++) {
             int minIndex = i;
@@ -65,6 +106,9 @@ public class ShoppingCart {
         }
     }
 
+    /**
+     * Sorts the cart items in ascending order by product ID using selection sort.
+     */
     public void sortById() {
         for (int i = 0; i < items.size() - 1; i++) {
             int minIndex = i;
@@ -82,6 +126,10 @@ public class ShoppingCart {
         }
     }
 
+    /**
+     * Prints all items and their costs, calculates subtotal, tax (13%), and total,
+     * then clears the cart.
+     */
     public void checkout() {
         if (items.isEmpty()) {
             System.out.println("Your cart is empty.");
