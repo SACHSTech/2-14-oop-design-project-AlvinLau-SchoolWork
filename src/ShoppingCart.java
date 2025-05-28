@@ -21,10 +21,17 @@ public class ShoppingCart {
         items.add(new CartItem(product, quantity));
     }
 
-    public void removeItem(String id) {
+    public void removeItem(String id, int quantity) {
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getProduct().getId().equals(id)) {
-                items.remove(i);
+            CartItem item = items.get(i);
+            if (item.getProduct().getId().equals(id)) {
+                int currentQuantity = item.getQuantity();
+                if (quantity >= currentQuantity) {
+                    items.remove(i);
+                } else {
+                    item.setQuantity(currentQuantity - quantity);
+                }
+                return;
             }
         }
     }
